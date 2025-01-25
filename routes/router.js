@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router();
 const usersControllers = require('../controllers/users.controller')
+const jwt = require('jsonwebtoken');
 const middlewareJWT = require('../middleware/jwt')
 
 router.get('/users', usersControllers.getUsers)
@@ -11,4 +12,5 @@ router.put('/updateUser/:id', usersControllers.updateUser)
 router.post('/inicioDeSesion', usersControllers.inicioDeSesion)
 
 // router.get('/users', middlewareJWT.verificacionDeToken , usersControllers.getUsers)
+
 module.exports =  router

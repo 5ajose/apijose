@@ -9,7 +9,7 @@ exports.getUsers = async(req, res)=> {
         let dataUsers = await userModel.find()
         res.json(dataUsers)
     } catch (error) {
-        console.log(error);
+        console.log(error.message);
         res.send({error:"Información restringida"})
                
     }
@@ -49,7 +49,7 @@ exports.addUsers = async(req, res)=> {
         res.status(200).json(creado)
        
     } catch (error) {
-        console.log(error);
+        console.log(error.message);
         res.status(400).send({error:"Necesitas ayuda? contactanos"})
                 
     }
@@ -73,7 +73,7 @@ exports.deleteUser = async(req, res)=> {
        
         
     } catch (error) {
-        console.log(error);
+        console.log(error.message);
         res.send({error:"Error"})
         
     }
@@ -96,35 +96,36 @@ exports.updateUser = async (req, res) => {
         res.status(200).json(updatedUser);
 
     } catch (error) {
-        console.log(error);
+        console.log(error.message);
         res.status(500).json({ error: "Ha ocurrido un error al intentar actualizar la información del usuario" });
     }
 }
-exports.inicioDeSesion = async (req, res)=> {
+exports.inicioDeSesion = async (req, res) => {
     try {
-        let data = req.body
-        let user = await userModel.findOne({email: data.email})
+        let data = req.body;
+        let user = await userModel.findOne({ correo: data.correo });
 
         if (user) {
             if (user.contrasena === data.contrasena) {
                 
                 let payload = {
-                        id: user._id,
-                        nombre: `${user.correo} ${user.contrasena}`
-                    }
-                    let SECRET_KEY_JWT = process.env.JWT_SECRET
-                    let token = jwt.sign(payload,SECRET_KEY_JWT, {expiresIn: '24h'})
-                    res.status(200).json({token:token,roll:user.roll})
+                    id: user._id,
+                    nombre: `${user.nombre} ${user.apellido}`,
+                };
+
+                let SECRET_KEY_JWT = process.env.JWT_SECRET;
+                let token = jwt.sign(payload, SECRET_KEY_JWT, { expiresIn: '24h' });
+
+                res.status(200).json({ token });
             } else {
-                res.status(400).send({error:"Credenciales invalidas (clave)"})
+                res.status(400).send({ error: "Credenciales inválidas (contraseña incorrecta)" });
             }
 
         } else {
-            res.status(400).send({error:"Credenciales invalidas (correo)"})
+            res.status(400).send({ error: "Credenciales inválidas (usuario no encontrado)" });
         }
     } catch (error) {
-        console.log(error);
-        res.status(500).send({error:"Ha ocurrido algo, comunicate con el admin"})
-        
+        console.log(error.message);
+        res.status(500).send({ error: "Ha ocurrido un error, comunícate con el administrador" });
     }
-}
+};

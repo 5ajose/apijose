@@ -13,7 +13,9 @@ exports.login = async (req, res) => {
             } else{
                 res.status(400).send({msj:"Información invalida"})
             }
-        }
+        } else {
+            res.status(400).send({msj:"Información invalida"})
+    }
         
     } catch (error) {
         console.log(error);

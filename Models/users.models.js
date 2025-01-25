@@ -5,13 +5,13 @@ const userModel = mongoose.Schema({
         type: String,
         required: true
     },
-    apellidos: {
+    apellido: {
         type: String,
         required: true
     },
     direccion: {
         type: String,
-        required: true
+        required: false
     },
     correo: {
         type: String,
@@ -23,7 +23,7 @@ const userModel = mongoose.Schema({
     },
     roll: {
         type: String,
-        required: true
+        required: false
     }
 },{
     versionKey: false
@@ -36,7 +36,7 @@ module.exports = mongoose.model('users', userModel)
 /*
 {
 "nombre":"jose",
-"apellidos": "Quinto Aguilar",
+"apellido": "Quinto Aguilar",
 "correo": "jose@gmail.com",
 "contrasena": "1234jose",
 "direccion": "calle 100 # 9 - 90",
