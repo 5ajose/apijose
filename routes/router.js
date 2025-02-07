@@ -11,6 +11,6 @@ router.delete('/deleteUser/:id', usersControllers.deleteUser)
 router.put('/updateUser/:id', usersControllers.updateUser)
 router.post('/inicioDeSesion', usersControllers.inicioDeSesion)
 
-// router.get('/users', middlewareJWT.verificacionDeToken , usersControllers.getUsers)
+router.get('/users', middlewareJWT.verificacionDeToken , usersControllers.getUsers)
 
 module.exports =  router
